@@ -1,5 +1,4 @@
 # Natural-Language-Processing-in-imdb-dataset
-Using 50000 reviews of movies available in raw text file, trained a model which can predict and classify any review into sentimental responses and can club the movies into various categories.
 
 The real world is filled with text data and is usually messy hence cleaning and handling text is an important step towards making smarter Machine Learning algorithms. IMDB dataset is one of such usual messy data set which hides a lot of information under the hood which is awaiting to be discovered. IMDB holds sentiments of a bunch of people which can give away a lot of insights about the movie itself, understanding such sentiments can boost any production house income. The derived information can be very useful in building customized recommendations for users based on their reviews. And these models can be used to find unhappy customers, the reason for dissatisfaction and so on. Sentiment analysis is a great tool for the same.
 
