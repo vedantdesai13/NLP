@@ -14,10 +14,15 @@ MACHINE LEARNING
 			        -Decision Trees
 				-Linear Regression
 				-Support Vector Machines (SVM)
-	  2.Unsupervised Learning: We do not have any target or outcome variable to predict.
+	  2.Unsupervised Learning: We do not have any target or outcome variable to predict. It is also called as clustering.
 				-K-means
 				-Hierarchical Clustering(Divisive, Agglomerative)
 	  3.Semi-supervised Learning: Combination of supervised and unsupervised learning, typically containing a small amount of labeled data with a large amount of unlabeled data.
+
+	 -> Classification:- Classification is the process of predicting the class of given data points. So the computer program learns from the data input given to it and then uses this learning to classify new observation.
+			  Common algos used:- Logistic Regression, Naïve Bayes, K-Nearest Neighbours, Decision Tree,  Random Forest,  Support Vector Machine. 
+	 -> Regression:- It is the process of predicting values of a desired target quantity when the target quantity is continuous.
+			   Common algos used:- Simple linear regression, Support vector machines, multivariate regression algorithm.
 
 	*TOOLS
 	-scikit-learn
