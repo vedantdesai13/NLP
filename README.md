@@ -44,3 +44,46 @@ DEEP LEARNING
 	-Deep Belief Networks (DBN)
 	-Convolutional Neural Network (CNN)
 	-Stacked Auto-Encoders
+
+
+NATURAL LANGUAGE PROCESSING(NLP)
+
+*NLP is a branch of artificial intelligence that helps computers understand, interpret and manipulate human language. 
+
+	~TOPICS OF NLP:-
+
+		-Content categorization: A linguistic-based document summary, including search and indexing, content alerts and duplication detection.
+	
+		-Topic discovery and modeling: Accurately capture the meaning and themes in text collections, and apply advanced analytics to text, like optimization and forecasting.
+
+		-Contextual extraction: Automatically pull structured information from text-based sources.
+
+		-Sentiment analysis: Identifying the mood or subjective opinions within large amounts of text, including average sentiment and opinion mining. 
+
+		-Speech-to-text and text-to-speech conversion: Transforming voice commands into written text, and vice versa. 
+	
+		-Document summarization: Automatically generating synopses of large bodies of text.
+
+		-Machine translation: Automatic translation of text or speech from one language to another.
+
+		-Identifying scammers: Natural Language Processing uses spam filters. This is a commonly used defense mechanism much needed to identify spam messages and emails.
+
+		-Question Answering: A QA application is a system capable of logically answering a valid human request. NLP has the capability to understand the human languages either in text-only format or spoken dialogue.
+
+	~MAIN APPROACHES IN NLP:-
+		
+		1.Rule based methods:
+			
+			*Regular expressions
+			*Context Free Grammers
+
+		2.Probablistic modeling and Machine learning:
+		
+			*Likelihood Maximization
+			*Linear Classifiers
+		
+		3.Deep Learning
+			
+			*Recurrent Neural Networks
+			*Convolutional Neural Networks
+		
