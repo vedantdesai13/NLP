@@ -70,6 +70,7 @@ NATURAL LANGUAGE PROCESSING(NLP)
 
 		-Question Answering: A QA application is a system capable of logically answering a valid human request. NLP has the capability to understand the human languages either in text-only format or spoken dialogue.
 
+
 	~MAIN APPROACHES IN NLP:-
 		
 		1.Rule based methods:
@@ -87,3 +88,54 @@ NATURAL LANGUAGE PROCESSING(NLP)
 			*Recurrent Neural Networks
 			*Convolutional Neural Networks
 		
+
+	~TEXT PREPROCESSING:-
+
+		1.Tokenization: It is a process that splits an input sequence into so-called tokens.
+						-nltk.tokenize
+
+		2.Token Normalization:
+
+				*Stemming: Stemming is a process of removing and replacing suffixes to get to the root form of the word, which is called the stem.		
+						-Porter's Stemmer: nltk.stem.PorterStemmer
+
+				*Lemmatization: Returns the base or dictionary form of a word, known as lemma.
+						-Wordnet Lemmatizer: nltk.stem.WordNetLemmatizer
+
+
+	~WORD EMBEDDING:-
+		-Word Embeddings are the texts converted into numbers and there may be different numerical representations of the same text
+
+			*Bag Of Words(BOW): It is a sum of sparse one-hot-encoders. Uses text vectorization to count occurrences of a particular token in our text.
+					
+			*N-Grams of BOW:  An n-gram is a contiguous sequence of n items from a given sample of text or speech.
+
+			*TF-IDF Vectorizers as BOW: tfidf(t,d,D) = tf(t,d)*idf(t,D) where, tf(t,d) is frequency of term(t) in document(d) and idf is number of documents where term t appears.
+
+
+	~TEXT CLASSIFICATION MODELS ON WORD EMBEDDING:-
+		
+		*Linear Models: Can be used over bag of 1,2-grams with TF-IDF 
+
+				-Logistic Regression
+				-Naive Bayes
+				-SVM
+
+		*Hashing Techniques: Used for mapping n-grams to feature indices. 
+
+				Example: { n-gram -> hash(n-gram) % 2^20 } 
+
+				-So can be used for huge datasets as it maps data into a pre-specified size.
+						-sklearn.feature_extraction.text.HashingVectorizer
+
+		*Word2Vec neural network techniques: It is a two layer neural network used to generate word embeddings given a text corpus. 
+						     The word2vec objective function causes the words that occur in similar contexts to have similar embeddings.
+
+				-> CBOW(Continous Bag Of Words) Model: This method takes the context of each word as the input and tries to predict the word corresponding to the context.
+								       
+				-> Skip-Gram model: Predict the context word from the given target.
+		
+					Example: "Hope can set you free"
+						In CBOW model, for window size 3 it uses "hope" and "set" to predict "can".
+						In Skip-Gram model, for window size 3 it uses "can" to predict "hope" and "set".
+	
