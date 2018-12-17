@@ -7,7 +7,7 @@ from gensim.models import Word2Vec
 
 corpus = []
 
-#Read data from a file
+# Read data from a file
 for f in open('text3.txt', 'r'):
     corpus.append(f.split())
 
