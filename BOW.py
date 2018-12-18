@@ -6,7 +6,7 @@ This module is for the creation of bag of words from scratch
 import re
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from keras.preprocessing import text
+# from keras.preprocessing import text
 
 
 # Read data from a file
@@ -26,10 +26,6 @@ def convert_to_lowcase(st):
     return st
 
 
-corpus = rem_special_chars(corpus)
-corpus = convert_to_lowcase(corpus)
-
-
 # Function to remove stop words
 def rem_stopwords(s):
     stop_words = set(stopwords.words('english'))
@@ -44,18 +40,13 @@ def rem_stopwords(s):
     return " ".join([w for w in s.split() if w not in stop_words])
 
 
-corpus = rem_stopwords(corpus)
-
-
 # Function to implement Lemmatization
 def lemma(s):
     lemmatizer = WordNetLemmatizer()
     return " ".join([lemmatizer.lemmatize(w) for w in s.split()])
 
 
-corpus = lemma(corpus)
-
-
+'''
 # Function to tokenize the words
 def con_to_token(s):
     s = text.text_to_word_sequence(s)
@@ -64,6 +55,11 @@ def con_to_token(s):
     return t
 
 
+
+corpus = rem_special_chars(corpus)
+corpus = convert_to_lowcase(corpus)
+corpus = rem_stopwords(corpus)
+corpus = lemma(corpus)
 tokenizer = con_to_token(corpus)
 
 
@@ -73,7 +69,7 @@ print("word index = ", tokenizer.word_index)
 print("word document id = ", tokenizer.word_docs)
 
 
-'''count = 0
+count = 0
 for i in corpus.split():
     print(i)
     count += 1
