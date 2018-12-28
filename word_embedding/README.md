@@ -14,6 +14,6 @@ REQUIREMENTS:-
 
 Steps to install glove library:-
 
-- Install the 'setup.py' file given: 
+- Install the 'setup.py' file present in folder glove-python given: 
 Take the command prompt to the location of the setup.py file and then type "pip setup.py install".
 - Now do 'pip install glove'. (Make sure pip version is 18.1)
