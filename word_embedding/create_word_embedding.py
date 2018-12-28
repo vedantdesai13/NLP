@@ -2,57 +2,71 @@ from glove import Corpus, Glove
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+import pandas as pd
 
 
+# Used for pre-processing the text
 def text_pre_process(c):
 
-    t = [word_tokenize(i) for i in c]
+    t = [word_tokenize(i) for i in c]  # converting into list of list
 
-    filter_words = ['(', ')', '.', '*', ',', '?', '**', ]
+    # For removing special characters
+    filter_words = ['(', ')', '.', '*', ',', '?', '**', '1']
     t = [[w.lower() for w in z if w not in filter_words] for z in t]
-    #print(filtered)
+
+    # Removing stop words
     stop_words = set(stopwords.words('english'))
+    line = [[w for w in z if w not in stop_words] for z in t]
 
-    lines = [[w for w in z if w not in stop_words] for z in t]
-
+    # Lematizing
     lema = WordNetLemmatizer()
-    lines = [[lema.lemmatize(w) for w in z] for z in lines]
+    line = [[lema.lemmatize(w) for w in z] for z in line]
 
-    return lines
+    return line
 
 
-def train_model(lines):
+# Training the words into glove
+def train_model(line):
 
     corpus = Corpus()
-    corpus.fit(lines)
-
-    glove = Glove(no_components=5, learning_rate=0.1)
-
-    glove.fit(corpus.matrix, epochs=150, no_threads=10, verbose=True)
-    glove.add_dictionary(corpus.dictionary)
-    glove.save('glove.model')
-    return glove
+    corpus.fit(line)
+    glov = Glove(no_components=10, learning_rate=0.05)
+    glov.fit(corpus.matrix, epochs=200, no_threads=10, verbose=True)
+    glov.add_dictionary(corpus.dictionary)
+    glov.save('glove.model')
+    return glov
 
 
+# Used to return words with their feature values
 def show_word_embeddings(glove):
 
     x = [k for k in glove.dictionary.keys()]
     m = dict(zip(x, glove.word_vectors))
-    print(m)
+    return m
 
 
+# Shows similarity between words
 def show_similar_words(glove, word):
 
     print(glove.most_similar(word))
 
 
+# Reading the file
 f = open('java.md', 'r')
 co = f.readlines()
+
 lines = text_pre_process(co)
 # print(lines)
 glove = train_model(lines)
-# show_word_embeddings(glove)
-show_similar_words(glove, 'run')
+
+show_similar_words(glove, 'run')  # Print the words most similar to run
+
+# Return the word embedding into a file
+word_emb = show_word_embeddings(glove)
+d = pd.DataFrame.from_dict(word_emb)
+d.to_html('output.html', index=True)
+
+
 
 
 
