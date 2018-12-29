@@ -27,6 +27,7 @@ def text_pre_process(c):
     return line
 
 
+'''
 # Training the words into glove
 def train_model(line):
     corpus = Corpus()
@@ -38,7 +39,7 @@ def train_model(line):
     return glov
 
 
-'''
+
 # Used to return words with their feature values
 def show_word_embeddings(glove):
     x = [k for k in glove.dictionary.keys()]
@@ -49,6 +50,7 @@ def show_word_embeddings(glove):
 # Shows similarity between words
 def show_similar_words(glove, word):
     print(glove.most_similar(word, 20))
+'''
 
 
 # visualize the words
@@ -66,12 +68,10 @@ def visualize(vector, vocab):
         pyplot.annotate(word, xy=(result[i, 0], result[i, 1]))
     pyplot.show()
 
-'''
-
 
 # Implement word2vec
 def imp_word2vec(corpus):
-    model = Word2Vec(corpus, sg=1, min_count=3, window=10)
+    model = Word2Vec(corpus, sg=1, min_count=10, window=10)
     model.train(corpus, epochs=100, total_examples=len(corpus))
     print(model.wv.most_similar(positive='jvm'))
     # print(model[model.wv.vocab])
