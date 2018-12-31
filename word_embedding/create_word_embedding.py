@@ -39,7 +39,6 @@ def train_model(line):
     return glov
 
 
-
 # Used to return words with their feature values
 def show_word_embeddings(glove):
     x = [k for k in glove.dictionary.keys()]
@@ -69,17 +68,32 @@ def visualize(vector, vocab):
     pyplot.show()
 
 
+# Create word mappings
+def word_mappings(model):
+    wd = []
+    sim_wd = []
+    for w in model.wv.vocab:
+        wd.append(w)
+        sim_wd.append(model.wv.most_similar(positive=w, topn=5))
+
+    s = dict(zip(wd, sim_wd))
+    df = pd.DataFrame.from_dict(s)
+    df.to_html('word_mapping.html', index=True)
+
+
 # Implement word2vec
 def imp_word2vec(corpus):
-    model = Word2Vec(corpus, sg=1, min_count=10, window=10)
-    model.train(corpus, epochs=100, total_examples=len(corpus))
-    print(model.wv.most_similar(positive='jvm'))
+    model = Word2Vec(corpus, sg=0, min_count=4, window=7)
+    model.train(corpus, epochs=200, total_examples=len(corpus))
+    # print(model.wv.most_similar(positive='jvm'))
     # print(model[model.wv.vocab])
 
     x = [k for k in model.wv.vocab]
     m = dict(zip(x, model.wv.vectors))
     d = pd.DataFrame.from_dict(m)
     d.to_html('word2vec_output.html', index=True)
+
+    word_mappings(model)
 
     visualize(model.wv.vectors, model.wv.vocab)
 
