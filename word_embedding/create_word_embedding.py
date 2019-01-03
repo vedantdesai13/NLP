@@ -1,4 +1,4 @@
-# from glove import Corpus, Glove
+from glove import Corpus, Glove
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -6,34 +6,35 @@ import pandas as pd
 from gensim.models import Word2Vec
 from sklearn.decomposition import PCA
 from matplotlib import pyplot
+import re
 
 
 # Used for pre-processing the text
 def text_pre_process(c):
 
     t = [word_tokenize(i) for i in c]  # converting into list of list
-
+    print('tokenized')
     # For removing special characters
-    filter_words = ['(', ')', '.', '*', ',', '?', '**']
-    t = [[w.lower() for w in z if w not in filter_words] for z in t]
-
+    t = [[re.sub('[^a-zA-Z]+', '', w) for w in z] for z in t]
+    t = [[w.lower() for w in z] for z in t]
+    print('removed')
     # Lemmatizing
     lema = WordNetLemmatizer()
     line = [[lema.lemmatize(w) for w in z] for z in t]
-
+    print('lemmatzed removed')
     # Removing stop words
     stop_words = set(stopwords.words('english'))
     line = [[w for w in z if w not in stop_words] for z in line]
+    print('stop words removed')
     return line
 
 
-'''
 # Training the words into glove
 def train_model(line):
     corpus = Corpus()
     corpus.fit(line)
-    glov = Glove(no_components=10, learning_rate=0.05)
-    glov.fit(corpus.matrix, epochs=200, no_threads=10, verbose=True)
+    glov = Glove(no_components=5, learning_rate=0.05)
+    glov.fit(corpus.matrix, epochs=10, no_threads=100, verbose=True)
     glov.add_dictionary(corpus.dictionary)
     glov.save('glove.model')
     return glov
@@ -49,7 +50,6 @@ def show_word_embeddings(glove):
 # Shows similarity between words
 def show_similar_words(glove, word):
     print(glove.most_similar(word, 20))
-'''
 
 
 # visualize the words
@@ -83,8 +83,8 @@ def word_mappings(model):
 
 # Implement word2vec
 def imp_word2vec(corpus):
-    model = Word2Vec(corpus, sg=0, min_count=4, window=7)
-    model.train(corpus, epochs=200, total_examples=len(corpus))
+    model = Word2Vec(corpus, sg=0, min_count=8, window=7)
+    model.train(corpus, epochs=10, total_examples=len(corpus))
     # print(model.wv.most_similar(positive='jvm'))
     # print(model[model.wv.vocab])
 
@@ -99,15 +99,15 @@ def imp_word2vec(corpus):
 
 
 # Reading the file
-f = open('java.md', 'r')
+f = open('java.md', errors='ignore')
 co = f.readlines()
-
+print('read')
 lines = text_pre_process(co)
 # print(lines)
-'''
+
 glove = train_model(lines)
 
-show_similar_words(glove, 'program')  # Print the words most similar to run
+# show_similar_words(glove, 'program')  # Print the words most similar to run
 
 # Return the word embedding into a file
 word_emb = show_word_embeddings(glove)
@@ -116,7 +116,7 @@ d.to_html('output.html', index=True)
 
 # Plot
 visualize(glove.word_vectors, glove.dictionary.keys())
-'''
+
 
 imp_word2vec(lines)
 
