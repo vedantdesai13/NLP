@@ -1,1 +1,1 @@
-*.gs linguist-language=Python
+*.gs linguist-language='Python'
