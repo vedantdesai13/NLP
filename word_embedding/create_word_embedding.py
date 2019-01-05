@@ -1,4 +1,4 @@
-from glove import Corpus, Glove
+# from glove import Corpus, Glove
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -7,6 +7,7 @@ from gensim.models import Word2Vec
 from sklearn.decomposition import PCA
 from matplotlib import pyplot
 import re
+from nltk.corpus import wordnet
 
 
 # Used for pre-processing the text
@@ -15,8 +16,9 @@ def text_pre_process(c):
     t = [word_tokenize(i) for i in c]  # converting into list of list
     print('tokenized')
     # For removing special characters
-    t = [[re.sub('[^a-zA-Z]+', '', w) for w in z] for z in t]
-    t = [[w.lower() for w in z] for z in t]
+    t = [[re.sub('[^a-zA-Z]+', '!', w) for w in z] for z in t]
+    spec_char = ['!']
+    t = [[w.lower() for w in z if w not in spec_char] for z in t]
     print('removed')
     # Lemmatizing
     lema = WordNetLemmatizer()
@@ -28,7 +30,7 @@ def text_pre_process(c):
     print('stop words removed')
     return line
 
-
+'''
 # Training the words into glove
 def train_model(line):
     corpus = Corpus()
@@ -50,7 +52,7 @@ def show_word_embeddings(glove):
 # Shows similarity between words
 def show_similar_words(glove, word):
     print(glove.most_similar(word, 20))
-
+'''
 
 # visualize the words
 def visualize(vector, vocab):
@@ -81,6 +83,27 @@ def word_mappings(model):
     df.to_html('word_mapping.html', index=True)
 
 
+# Create synonym word matrix
+def word_syn(model):
+    wd = []
+    syn = []
+    for w in model.wv.vocab:
+        wd.append(w)
+        a = []
+        for s in wordnet.synsets(w):
+            for l in s.lemmas():
+                a.append(l.name())
+        syn.append(a)
+
+    print(type(syn))
+
+    diction = dict(zip(wd, syn))
+    print(diction)
+    df = pd.DataFrame.from_dict(diction, orient='index')
+    df = df.transpose()
+    df.to_html('word_syn.html', index=True)
+
+
 # Implement word2vec
 def imp_word2vec(corpus):
     model = Word2Vec(corpus, sg=0, min_count=8, window=7)
@@ -95,7 +118,24 @@ def imp_word2vec(corpus):
 
     word_mappings(model)
 
+    word_syn(model)
+
     visualize(model.wv.vectors, model.wv.vocab)
+
+
+# Implement GloVe
+def imp_glove(lines):
+    glove = train_model(lines)
+
+    # show_similar_words(glove, 'program')  # Print the words most similar to run
+
+    # Return the word embedding into a file
+    word_emb = show_word_embeddings(glove)
+    d = pd.DataFrame.from_dict(word_emb)
+    d.to_html('output.html', index=True)
+
+    # Plot
+    visualize(glove.word_vectors, glove.dictionary.keys())
 
 
 # Reading the file
@@ -105,20 +145,11 @@ print('read')
 lines = text_pre_process(co)
 # print(lines)
 
-glove = train_model(lines)
-
-# show_similar_words(glove, 'program')  # Print the words most similar to run
-
-# Return the word embedding into a file
-word_emb = show_word_embeddings(glove)
-d = pd.DataFrame.from_dict(word_emb)
-d.to_html('output.html', index=True)
-
-# Plot
-visualize(glove.word_vectors, glove.dictionary.keys())
-
+# imp_glove(lines)
 
 imp_word2vec(lines)
+
+
 
 
 
