@@ -11,4 +11,4 @@ parser = argparse.ArgumentParser('input')
 parser.add_argument('word', help='the most similar words will be printed', type=str)
 arg = parser.parse_args()
 
-print(model.most_similar(arg.word))
+print(model.most_similar(arg.word, 2))
