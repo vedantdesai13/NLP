@@ -1,4 +1,4 @@
-from glove import Glove
+# from glove import Glove
 import numpy as np
 import argparse
 import time
@@ -41,7 +41,7 @@ def using_dictionary():
     print('time taken by dictionary', time.time() - start)
 
 
-using_model()
+# using_model()
 
 using_dictionary()
 
